@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="container">
+        <h1>Cuestionario</h1>
+        <form id="quiz-form">
+            <label for="num-questions">Número de preguntas:</label>
+            <input type="number" id="num-questions" min="1" required>
+            <button type="submit">Configurar</button>
+        </form>
+        <div id="quiz"></div>
+        <textarea id="answers" rows="10" cols="50" readonly></textarea>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

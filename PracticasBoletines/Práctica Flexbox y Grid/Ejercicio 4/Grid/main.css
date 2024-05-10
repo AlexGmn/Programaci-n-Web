@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header, nav, section1,section2, aside, footer {
+    padding: 20px;
+    background-color: #FFCF29;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        "nav header header"
+        "nav section1 aside"
+        "nav section2 aside"
+        "nav footer footer";
+    grid-template-rows: auto auto auto auto auto;
+    gap: 10px;
+    width: 100vw; 
+    height: 100vh;
+}
+
+
+header {
+    grid-area: header;
+}
+
+nav {
+    grid-area: nav;
+}
+
+section1 {
+    grid-area: section1;
+}
+
+section2 {
+    grid-area: section2;
+}
+
+aside {
+    grid-area: aside;
+}
+
+footer {
+    grid-area: footer;
+}

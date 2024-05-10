@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia Clínica</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Historial</a></li>
+                <li><a href="#">Configuración</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <div class="photo-container">
+            <img src="#" alt="Foto del paciente" id="imagen-preview">
+            <input type="file" id="foto" accept="image/*">
+        </div>
+        <div class="main">
+            
+            <form id="formulario">
+            <h2>Datos Personales</h2>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" required>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" required>
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" required>
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="datetime-local" id="fechaNacimiento" required>
+                <label for="cedula">Cédula de Identidad:</label>
+                <input type="text" id="cedula" required>
+
+            <h2>Lugar de Nacimiento</h2>
+            <label for="pais">País de Nacimiento:</label>
+            <select id="pais">
+                <option value="ecuadorCities">Ecuador</option>
+                <option value="argentinaCities">Argentina</option>
+                <option value="colombiaCities">Colombia</option>
+                <option value="peruCities">Perú</option>
+            </select>
+            <label for="ciudad">Ciudad de Nacimiento:</label>
+            <select id="ciudad"></select>
+            
+            </form>
+            
+        </div>
+       
+    </div>
+
+    <section class="consultas">
+        <h2>Consultas</h2>
+        <table id="tabla-consultas">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </section>
+    
+    <section>
+        <h2>Hijos</h2>
+        <button id="agregarHijo">Agregar hijo</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="tablaHijos">
+            </tbody>
+        </table>
+        
+
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Historia Clínica</p>
+    </footer>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>

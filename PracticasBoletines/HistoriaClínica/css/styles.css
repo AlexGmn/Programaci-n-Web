@@ -1,0 +1,106 @@
+header, footer {
+    background-color: #2745cb;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #d7d4d4;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.photo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+/* Estilos para la información del paciente */
+
+.main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilos para las tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilos para los botones */
+button {
+    background-color: #3947ac;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0b0b2c;
+}
+
+
+#imagen-preview {
+    
+    max-width: 200px;
+    height: auto;
+    
+}
+
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .patient-info {
+        grid-template-columns: 1fr;
+    }
+}
