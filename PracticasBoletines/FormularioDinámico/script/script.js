@@ -33,12 +33,40 @@ function generateQuiz(numQuestions) {
     
     // Mostramos el contenedor de preguntas y ocultamos el formulario de configuración
     quizContainer.style.display = 'block';
-    answersTextarea.style.display = 'none';
+    
     // Mostramos el botón de configuración
     quizForm.style.display = 'inline-block';
     }
-
-    function generateStudentQuiz(questions) {
+    function generateStudentQuiz(questions, questionTypes, options) {
+        let studentQuizHTML = '';
+    
+        for (let i = 0; i < questions.length; i++) {
+            studentQuizHTML += `<div class="question">
+                                    <h3>Pregunta ${i + 1}</h3>
+                                    <p>${questions[i]}</p>`;
+    
+            if (questionTypes[i] === 'multiple-choice') {
+                studentQuizHTML += `<p>Opciones:</p>
+                                    <ul>`;
+                options[i].forEach(option => {
+                    studentQuizHTML += `<li>${option}</li>`;
+                });
+                studentQuizHTML += `</ul>`;
+            }
+    
+            studentQuizHTML += `<textarea id="answer-${i + 1}" rows="4" cols="50" required></textarea>
+                                </div>`;
+        }
+    
+        document.getElementById('student-quiz').innerHTML = studentQuizHTML;
+        document.getElementById('quiz').style.display = 'none';
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('student-quiz-container').style.display = 'block';
+    }
+    
+ 
+    
+    /*function generateStudentQuiz(questions) {
         let studentQuizHTML = '';
     
         questions.forEach((question, index) => {
@@ -54,7 +82,7 @@ function generateQuiz(numQuestions) {
         document.getElementById('quiz-form').style.display = 'none';
         document.getElementById('student-quiz-container').style.display = 'block';
     }
-    
+     */
     function submitStudentAnswers() {
         const numQuestions = parseInt(document.getElementById('num-questions').value);
         let studentAnswersHTML = '';
@@ -68,19 +96,31 @@ function generateQuiz(numQuestions) {
         resultsContainer.innerHTML = studentAnswersHTML;
         resultsContainer.style.display = 'block';
     }
-    
+   
     function submitConfig() {
         const numQuestions =  parseInt(document.getElementById('num-questions').value);
         const questions = [];
-        
+        const questionTypes = [];
+        const options = [];
+
         // Recopilar las preguntas configuradas
         for (let i = 1; i <= numQuestions; i++) {
             const question = document.getElementById(`question-${i}-text`).value;
+            const questionType = document.getElementById(`question-${i}-type`).value;
+            const questionOptions = [];
+
+            if (questionType === 'multiple-choice') {
+                const optionsInput = document.getElementById(`question-${i}-options`).value;
+                questionOptions.push(...optionsInput.split(','));
+            }
+
             questions.push(question);
+            questionTypes.push(questionType);
+            options.push(questionOptions.length > 0 ? questionOptions : null);
         }
     
         // Generar el cuestionario del estudiante
-        generateStudentQuiz(questions);
+        generateStudentQuiz(questions, questionTypes, options);
     }
 
 
