@@ -14,8 +14,20 @@
             <input type="number" id="num-questions" min="1" required>
             <button type="submit">Configurar</button>
         </form>
-        <div id="quiz"></div>
-        <textarea id="answers" rows="10" cols="50" readonly></textarea>
+        <div id="quiz" style="display: none;">
+            
+        </div>
+        <textarea id="answers" rows="10" cols="50" readonly style="display: none;"></textarea>
+    </div>
+
+    <div id="student-quiz-container" style="display: none;">
+        <!-- Cuestionario para el estudiante -->
+        <div id="student-quiz"></div>
+        <button onclick="submitStudentAnswers()">Enviar Respuestas</button>
+    </div>
+
+    <div id="results-container" style="display: none;">
+        <!-- Aquí se mostrarán los resultados -->
     </div>
 
     <script src="script.js"></script>
