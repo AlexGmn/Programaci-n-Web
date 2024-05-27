@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento de personas</title>
+</head>
+<body>
+    <h1>Mantenimiento de personas</h1>
+    <form id="form-persona">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre"><br><br>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido"><br><br>
+        <button type="submit">Ingresar persona</button>
+    </form>
+    <button id="recuperar-personas">Recuperar todas las personas</button>
+    <pre id="personas-recuperadas"></pre>
+    <h2>Personas en LocalStorage</h2>
+    <pre id="localStorageData"></pre>
+    <h2>Personas en SessionStorage</h2>
+    <pre id="sessionStorageData"></pre>
+    <h1>Usuarios</h1>
+    <ul id="personList"></ul>
+    <script src="/PracticasBoletines/Práctica JavaScript III/script/script.js"></script>
+</body>
+</html>
