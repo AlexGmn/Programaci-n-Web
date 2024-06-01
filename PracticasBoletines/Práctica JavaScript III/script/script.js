@@ -1,5 +1,5 @@
 
-// Función para obtener las personas del archivo JSON
+// Obtener las personas del archivo JSON
 async function obtenerPersonas() {
     try {
         const response = await fetch('personas.json');
@@ -34,7 +34,7 @@ async function agregarPersona(nombre, apellido) {
 
         // Guardado en archivo JSON
         await fetch('personas.json', {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -85,29 +85,78 @@ async function eliminarPersona(nombre) {
 // Función para recuperar todas las personas del archivo JSON
 async function recuperarPersonas() {
     try {
-        const localStorageData = document.getElementById('localStorageData');
-        const sessionStorageData = document.getElementById('sessionStorageData');
+        const localStorageList = document.getElementById('localStorageList');
+        const sessionStorageList = document.getElementById('sessionStorageList');
 
-        localStorageData.textContent = localStorage.getItem('personas') || '[]';
+        // Mostrar personas de localStorage
+        const localStoragePersons = getLocalStoragePersons();
+        if (localStoragePersons.length > 0) {
+            displayPersons(localStoragePersons, localStorageList);
+        }
 
+        // Mostrar personas de sessionStorage
+        const sessionStoragePersons = getSessionStoragePersons();
+        if (sessionStoragePersons.length > 0) {
+            displayPersons(sessionStoragePersons, sessionStorageList);
+        }
 
-        sessionStorageData.textContent = sessionStorage.getItem('personas') || '[]';
-
+        // Mostrar personas de archivo json
         const personas = await obtenerPersonas();
-        const listaPersonas = document.getElementById('personas-recuperadas');
-        listaPersonas.innerHTML = '';
+        const tbody = document.getElementById('personas-recuperadas');
+        tbody.innerHTML = '';       
+        
         personas.forEach(persona => {
-            const elemento = document.createElement('li');
-            elemento.textContent = `${persona.nombre} ${persona.apellido}`;
-            listaPersonas.appendChild(elemento);
+            const row = document.createElement('tr');
+    
+            const nameCell = document.createElement('td');
+            nameCell.textContent = persona.nombre;
+            row.appendChild(nameCell);
+    
+            const apell = document.createElement('td');
+            apell.textContent = persona.apellido;
+            row.appendChild(apell);
+    
+            tbody.appendChild(row);
         });
+
     } catch (error) {
         console.error(error);
     }
 }
-// Función para obtener las personas del localStorage
-function obtenerPersonasLocalStorage() {
-    return JSON.parse(localStorage.getItem('personas')) || [];
+
+function displayPersons(persons, tbody) {
+    tbody.innerHTML = '';
+
+    persons.forEach(person => {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = person.nombre;
+        row.appendChild(nameCell);
+
+        const apell = document.createElement('td');
+        apell.textContent = person.apellido;
+        row.appendChild(nameCell);
+
+        const ageCell = document.createElement('td');
+        ageCell.textContent = person.edad;
+        row.appendChild(ageCell);
+
+        tbody.appendChild(row);
+    });
+}
+
+
+// Función para obtener personas de localStorage
+function getLocalStoragePersons() {
+    const localStorageData = localStorage.getItem('personas');
+    return localStorageData ? JSON.parse(localStorageData) : [];
+}
+
+// Función para obtener personas de sessionStorage
+function getSessionStoragePersons() {
+    const sessionStorageData = sessionStorage.getItem('personas');
+    return sessionStorageData ? JSON.parse(sessionStorageData) : [];
 }
 
 // Función para agregar una persona al localStorage

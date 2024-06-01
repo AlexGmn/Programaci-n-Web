@@ -3,23 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
     <title>Mantenimiento de personas</title>
 </head>
 <body>
     <h1>Mantenimiento de personas</h1>
-    <form id="form-persona">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre"><br><br>
-        <label for="apellido">Apellido:</label>
-        <input type="text" id="apellido" name="apellido"><br><br>
-        <button type="submit">Ingresar persona</button>
-    </form>
+    <div class="center">
+        <form id="form-persona">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"><br><br>
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido"><br><br>
+            <label for="correo">Edad:</label>
+            <input type="number" id="edad" name="edad"><br><br>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo"><br><br>
+            <button type="submit">Ingresar persona</button>
+        </form>
+    </div>
+
     <button id="recuperar-personas">Recuperar todas las personas</button>
-    <pre id="personas-recuperadas"></pre>
-    <h2>Personas en LocalStorage</h2>
-    <pre id="localStorageData"></pre>
-    <h2>Personas en SessionStorage</h2>
-    <pre id="sessionStorageData"></pre>
+    
+    <div class="center">
+        <h2>Personas de archivo Json usando Fetch</h2>
+        <table id="personTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="personas-recuperadas"></tbody>
+        </table>
+    </div>
+    
+    <div class="center">
+        <h2>Personas en LocalStorage</h2>
+        <table id="localStorageTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="localStorageList"></tbody>
+        </table>
+    </div>
+
+    <div class="center">
+        <h2>Personas en SessionStorage</h2>
+        <table id="sessionStorageTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody id="sessionStorageList"></tbody>
+        </table>
+    </div>
     
     <script src="/PracticasBoletines/Práctica JavaScript III/script/script.js"></script>
 </body>
