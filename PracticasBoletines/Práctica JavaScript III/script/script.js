@@ -12,13 +12,13 @@ async function obtenerPersonas() {
 
 
 // Función para agregar una persona al archivo JSON
-async function agregarPersona(nombre, apellido) {
+async function agregarPersona(nombre, apellido, edad, correo) {
     try {
 
         const form = document.getElementById('form-persona');
         const personas = await obtenerPersonas();
         console.log(personas);
-        const nuevaPersona = { nombre, apellido };
+        const nuevaPersona = { nombre, apellido, edad, correo };
         personas.push(nuevaPersona);
         const json = JSON.stringify(personas);
 
@@ -87,6 +87,7 @@ async function recuperarPersonas() {
     try {
         const localStorageList = document.getElementById('localStorageList');
         const sessionStorageList = document.getElementById('sessionStorageList');
+        const personasJson = document.getElementById('personas-recuperadas');
 
         // Mostrar personas de localStorage
         const localStoragePersons = getLocalStoragePersons();
@@ -102,23 +103,10 @@ async function recuperarPersonas() {
 
         // Mostrar personas de archivo json
         const personas = await obtenerPersonas();
-        const tbody = document.getElementById('personas-recuperadas');
-        tbody.innerHTML = '';       
+        if (personas.length > 0) {
+            displayPersons(personas, personasJson);
+        }
         
-        personas.forEach(persona => {
-            const row = document.createElement('tr');
-    
-            const nameCell = document.createElement('td');
-            nameCell.textContent = persona.nombre;
-            row.appendChild(nameCell);
-    
-            const apell = document.createElement('td');
-            apell.textContent = persona.apellido;
-            row.appendChild(apell);
-    
-            tbody.appendChild(row);
-        });
-
     } catch (error) {
         console.error(error);
     }
@@ -136,11 +124,15 @@ function displayPersons(persons, tbody) {
 
         const apell = document.createElement('td');
         apell.textContent = person.apellido;
-        row.appendChild(nameCell);
+        row.appendChild(apell);
 
         const ageCell = document.createElement('td');
         ageCell.textContent = person.edad;
         row.appendChild(ageCell);
+
+        const correo = document.createElement('td');
+        correo.textContent = person.correo;
+        row.appendChild(correo);
 
         tbody.appendChild(row);
     });
@@ -180,7 +172,9 @@ function eliminarPersonaLocalStorage(nombre) {
         e.preventDefault();
         const nombre = document.getElementById('nombre').value;
         const apellido = document.getElementById('apellido').value;
-        await agregarPersona(nombre, apellido);
+        const edad = document.getElementById('edad').value;
+        const correo = document.getElementById('correo').value;
+        await agregarPersona(nombre, apellido, edad, correo);
 
     });
 

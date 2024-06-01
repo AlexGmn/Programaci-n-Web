@@ -1,8 +1,5 @@
 [
-    {"nombre":"alex","apellido":"gmn"},
-    {"nombre":"1","apellido":"1"},
-    {"nombre":"alex","apellido":"gmn"},
-    {"nombre":"alex","apellido":"gmn"},
-    {"nombre":"2","apellido":"2"},
-    {"nombre":"alex","apellido":"gmn"}
+    {"nombre":"alex","apellido":"gmn","edad":24,"correo":"alex@gmail.com"},
+    {"nombre":"alex","apellido":"gmn","edad":24,"correo":"alex@gmail.com"},
+    {"nombre":"alex","apellido":"gmn","edad":24,"correo":"alex@gmail.com"}
 ]
