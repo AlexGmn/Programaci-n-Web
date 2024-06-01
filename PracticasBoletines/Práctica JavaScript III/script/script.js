@@ -92,19 +92,19 @@ async function recuperarPersonas() {
         // Mostrar personas de localStorage
         const localStoragePersons = getLocalStoragePersons();
         if (localStoragePersons.length > 0) {
-            displayPersons(localStoragePersons, localStorageList);
+            displayPersons(localStoragePersons, localStorageList, true, deletePersonLocal);
         }
 
         // Mostrar personas de sessionStorage
         const sessionStoragePersons = getSessionStoragePersons();
         if (sessionStoragePersons.length > 0) {
-            displayPersons(sessionStoragePersons, sessionStorageList);
+            displayPersons(sessionStoragePersons, sessionStorageList, true, deletePersonSession);
         }
 
         // Mostrar personas de archivo json
         const personas = await obtenerPersonas();
         if (personas.length > 0) {
-            displayPersons(personas, personasJson);
+            displayPersons(personas, personasJson, false);
         }
         
     } catch (error) {
@@ -112,10 +112,10 @@ async function recuperarPersonas() {
     }
 }
 
-function displayPersons(persons, tbody) {
+function displayPersons(persons, tbody, showActions, deleteFunction) {
     tbody.innerHTML = '';
 
-    persons.forEach(person => {
+    persons.forEach((person, index) => {
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
@@ -134,6 +134,22 @@ function displayPersons(persons, tbody) {
         correo.textContent = person.correo;
         row.appendChild(correo);
 
+        if (showActions) {
+            const actionsCell = document.createElement('td');
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Editar';
+            editButton.addEventListener('click', () => editPerson(index)); 
+            actionsCell.appendChild(editButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Eliminar';
+            deleteButton.addEventListener('click', () => deleteFunction(person, index)); 
+            actionsCell.appendChild(deleteButton);
+
+            row.appendChild(actionsCell);
+        }
+
+
         tbody.appendChild(row);
     });
 }
@@ -151,21 +167,47 @@ function getSessionStoragePersons() {
     return sessionStorageData ? JSON.parse(sessionStorageData) : [];
 }
 
-// Función para agregar una persona al localStorage
-function agregarPersonaLocalStorage(nombre, apellido) {
-    const personas = obtenerPersonasLocalStorage();
-    const nuevaPersona = { nombre, apellido };
-    personas.push(nuevaPersona);
-    localStorage.setItem('personas', JSON.stringify(personas));
+// Función para editar una persona (simplemente un ejemplo, puedes implementar la lógica según tus necesidades)
+function editPerson(index) {
+    const localStoragePersons = getLocalStoragePersons();
+    
+    // Obtener la persona correspondiente al índice
+    const localStoragePerson = localStoragePersons[index];
+    
+    alert(`Editando persona: ${localStoragePerson.nombre}, ${localStoragePerson.apellido}`);
 }
 
-// Función para eliminar una persona del localStorage
-function eliminarPersonaLocalStorage(nombre) {
-    const personas = obtenerPersonasLocalStorage();
-    const indice = personas.findIndex(persona => persona.nombre === nombre);
 
+// Función para eliminar una persona
+function deletePersonLocal(person, index) {
+    
+    const localStoragePersons = getLocalStoragePersons();
+
+    // Obtener la persona correspondiente al índice
+    const localStoragePerson = localStoragePersons[index];
+
+    if (confirm(`¿Seguro que deseas eliminar a ${localStoragePerson.name}?`)) {
+        // Eliminar la persona de localStorage
+        localStoragePersons.splice(index, 1);
+        localStorage.setItem('persons', JSON.stringify(localStoragePersons));
+        displayPersons(localStoragePersons, localStorageList, true, deletePersonLocal);
+    }
 }
 
+function deletePersonSession(person, index) {
+    
+    const sessionStoragePersons = getSessionStoragePersons();
+
+    // Obtener la persona correspondiente al índice
+    const sessionStoragePerson = sessionStoragePersons[index];
+
+    if (confirm(`¿Seguro que deseas eliminar a ${person.name}?`)) {
+        // Eliminar la persona de sessionStorage
+        sessionStoragePersons.splice(index, 1);
+        sessionStorage.setItem('persons', JSON.stringify(sessionStoragePersons));
+        displayPersons(sessionStoragePersons, sessionStorageList, true, deletePersonSession);
+    }
+}
 
     // Eventos
     document.getElementById('form-persona').addEventListener('submit', async (e) => {
