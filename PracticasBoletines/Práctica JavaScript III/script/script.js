@@ -92,13 +92,13 @@ async function recuperarPersonas() {
         // Mostrar personas de localStorage
         const localStoragePersons = getLocalStoragePersons();
         if (localStoragePersons.length > 0) {
-            displayPersons(localStoragePersons, localStorageList, true, deletePersonLocal);
+            displayPersons(localStoragePersons, localStorageList, true, editLocalStoragePerson, deletePersonLocal);
         }
 
         // Mostrar personas de sessionStorage
         const sessionStoragePersons = getSessionStoragePersons();
         if (sessionStoragePersons.length > 0) {
-            displayPersons(sessionStoragePersons, sessionStorageList, true, deletePersonSession);
+            displayPersons(sessionStoragePersons, sessionStorageList, true, editSessionStoragePerson, deletePersonSession);
         }
 
         // Mostrar personas de archivo json
@@ -112,7 +112,7 @@ async function recuperarPersonas() {
     }
 }
 
-function displayPersons(persons, tbody, showActions, deleteFunction) {
+function displayPersons(persons, tbody, showActions, editFunction, deleteFunction) {
     tbody.innerHTML = '';
 
     persons.forEach((person, index) => {
@@ -138,11 +138,13 @@ function displayPersons(persons, tbody, showActions, deleteFunction) {
             const actionsCell = document.createElement('td');
             const editButton = document.createElement('button');
             editButton.textContent = 'Editar';
-            editButton.addEventListener('click', () => editPerson(index)); 
+            editButton.classList.add('button', 'edit-button');
+            editButton.addEventListener('click', () => editFunction(person, index)); 
             actionsCell.appendChild(editButton);
 
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Eliminar';
+            deleteButton.classList.add('button', 'delete-button');
             deleteButton.addEventListener('click', () => deleteFunction(person, index)); 
             actionsCell.appendChild(deleteButton);
 
@@ -167,16 +169,37 @@ function getSessionStoragePersons() {
     return sessionStorageData ? JSON.parse(sessionStorageData) : [];
 }
 
-// Función para editar una persona (simplemente un ejemplo, puedes implementar la lógica según tus necesidades)
-function editPerson(index) {
-    const localStoragePersons = getLocalStoragePersons();
-    
-    // Obtener la persona correspondiente al índice
-    const localStoragePerson = localStoragePersons[index];
-    
-    alert(`Editando persona: ${localStoragePerson.nombre}, ${localStoragePerson.apellido}`);
+// Función para editar una persona en localStorage
+function editLocalStoragePerson(person, index) {
+    const newPersonName = prompt("Ingrese el nuevo nombre:", person.nombre);
+    const newPersonApell = prompt("Ingrese el nuevo nombre:", person.apellido);
+    const newPersonAge = prompt("Ingrese la nueva edad:", person.edad);
+    const newPersonCorreo = prompt("Ingrese el nuevo correo:", person.correo);
+
+    if (newPersonName !== null && newPersonAge !== null) {
+        const localStoragePersons = getLocalStoragePersons();
+        const updatedPerson = { nombre: newPersonName, apellido: newPersonApell, age: newPersonAge, correo: newPersonCorreo };
+        localStoragePersons[index] = updatedPerson;
+        localStorage.setItem('persons', JSON.stringify(localStoragePersons));
+        displayPersons(localStoragePersons, localStorageList, true, editLocalStoragePerson, deletePersonLocal);
+    }
 }
 
+// Función para editar una persona en sessionStorage
+function editSessionStoragePerson(person, index) {
+    const newPersonName = prompt("Ingrese el nuevo nombre:", person.nombre);
+    const newPersonApell = prompt("Ingrese el nuevo nombre:", person.apellido);
+    const newPersonAge = prompt("Ingrese la nueva edad:", person.edad);
+    const newPersonCorreo = prompt("Ingrese el nuevo correo:", person.correo);
+
+    if (newPersonName !== null && newPersonAge !== null) {
+        const sessionStoragePersons = getSessionStoragePersons();
+        const updatedPerson = { nombre: newPersonName, apellido: newPersonApell, age: newPersonAge, correo: newPersonCorreo };
+        sessionStoragePersons[index] = updatedPerson;
+        sessionStorage.setItem('persons', JSON.stringify(sessionStoragePersons));
+        displayPersons(sessionStoragePersons, sessionStorageList, true, editSessionStoragePerso, deleteSessionStoragePerson);
+    }
+}
 
 // Función para eliminar una persona
 function deletePersonLocal(person, index) {
